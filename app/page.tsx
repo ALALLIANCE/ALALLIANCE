@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import type { Transition } from "framer-motion";
 import {
   PhoneCall,
   Mail,
@@ -180,7 +181,7 @@ export default function ALAllianceWow() {
                 <div className="relative z-10 h-full w-full p-6">
                   <div className="grid h-full grid-rows-3 gap-4">
                     <CardLine title="OEE Uplift" metric="+12.4%" sub="90-day average" />
-                    <CardLine title="Mean Time to Repair" metric="37m" sub="SLA: < 2h on-site" />
+                    <CardLine title="Mean Time to Repair" metric="37m" sub="SLA: &lt; 2h on-site" />
                     <CardLine title="Compliance Tasks" metric="100%" sub="Audited & signed-off" />
                   </div>
                 </div>
@@ -407,7 +408,11 @@ function Orbit({
   delay?: number;
   cursor: { x: number; y: number };
 }) {
-  const t = useMemo(() => ({ duration: 8 + delay, repeat: Infinity as const, ease: "linear" as const }), [delay]);
+  // FIX: provide a Transition type instead of `as const` on properties
+  const t = useMemo<Transition>(
+    () => ({ duration: 8 + delay, repeat: Infinity, ease: "linear" }),
+    [delay]
+  );
   const center = { x: `calc(50% - ${radius}px)`, y: `calc(50% - ${radius}px)` };
   const tiltX = (cursor.y - 0.5) * 10;
   const tiltY = (cursor.x - 0.5) * -10;
@@ -535,4 +540,3 @@ function randomConfettiColor() {
   const colors = ["#22d3ee", "#a78bfa", "#34d399", "#fde047", "#fca5a5", "#60a5fa"];
   return colors[Math.floor(Math.random() * colors.length)];
 }
-
