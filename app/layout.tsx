@@ -1,3 +1,6 @@
+// app/layout.tsx
+import "./globals.css"; // ← THIS makes Tailwind load
+
 export const metadata = {
   title: "AL ALLIANCE — Electrical • Mechanical • Automation",
   description:
@@ -11,4 +14,3 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     </html>
   );
 }
-
